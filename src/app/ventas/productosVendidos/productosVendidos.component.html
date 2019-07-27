@@ -1,0 +1,47 @@
+<section class="checkout_area section_gap">
+	<div class="container" >
+		<div class="button-group-area mt-40">
+			<button class="btn btn-dark" (click)="exportar()" *ngIf="!editado"><i class="fa fa-file-excel-o"></i></button>
+		</div>
+		<div class="section-top-border" >
+			<h3 class="mb-30 title_color">Productos vendidos</h3>
+			<div class="progress-table-wrap">
+				<div class="col-lg-12">
+					<div class="left_dorp">
+						<div class="input-group-icon mt-10">
+							<input type="text" [(ngModel)]="filtro" (keyup)="buscarProducto()" placeholder="Buscar cualquier cosa"  class="single-input">
+							<div class="icon">
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</div>
+						</div>
+					</div>
+					<div class="latest_product_inner">
+						<div class="row">
+
+							<div class="col-lg-4 col-md-6" *ngFor="let producto of listaProductosFiltro;">
+								<div class="single-product">
+									<div class="product-img">
+										<img class="card-img" style="width:261px; height:262px" src="data:image/jpeg;base64,{{producto.foto?producto.foto:fotoDefault}}" alt="">
+									</div>
+									<div class="product-btm">
+										<h4>{{producto.nombre}}</h4>
+										<div class="mt-3">
+											<span class="mr-4">${{producto.precio}}</span>
+											<span style="color: #007600!important; ">Cantidad Vendidos : {{producto.cantidadVendidos}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+
+
+
+

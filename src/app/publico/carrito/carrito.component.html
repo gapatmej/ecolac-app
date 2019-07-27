@@ -1,0 +1,139 @@
+<section class="checkout_area section_gap" style="padding-bottom:10px" *ngIf="usuarioDTO!=null">
+	<div class="container">
+		<div class="billing_details">
+			<div class="row">
+				<div class="col-lg-12">
+					<h3>Pedido </h3>
+					<div class="col-md-2 form-group p_star">
+						<label >Nombres :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<label class="form-control" >{{usuarioDTO.nombres}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Apellidos :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<label class="form-control" >{{usuarioDTO.apellidos}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Telefono :</label>
+					</div>
+					<div class="col-md-4 form-group p_star">
+						<label class="form-control" >{{pedidoDTO.telefono}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Email :</label>
+					</div>
+					<div class="col-md-4 form-group p_star">
+						<label class="form-control" >{{usuarioDTO.email}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Direccion :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<label class="form-control" >{{pedidoDTO.direccion}}</label>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="cart_area" style="padding-top:10px">
+	<div class="container">
+		<div class="cart_inner">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Producto</th>
+							<th scope="col">Precio Unitario</th>
+							<th scope="col">Cantidad</th>
+							<th scope="col">Total</th>
+							<th scope="col"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let detallePedido of pedidoDTO.detallesPedido" >
+							<td>
+								<div class="media">
+									<div class="d-flex" style="width:151px; height:152px">
+										<img src="data:image/jpeg;base64,{{detallePedido.DetallePedidoDTO.producto.ProductoDTO.foto?detallePedido.DetallePedidoDTO.producto.ProductoDTO.foto:fotoDefault}}" alt="">
+									</div>
+									<div class="media-body">
+										<p>{{detallePedido.DetallePedidoDTO.descripcion}}</p>
+									</div>
+								</div>
+							</td>
+							<td>
+								<h5>${{detallePedido.DetallePedidoDTO.precioUnitario}}</h5>
+							</td>
+							<td>
+								<div class="product_count">
+									<input type="text" id="cantidad" maxlength="12" name="cantidad" #cantidad="ngModel" [(ngModel)]="detallePedido.DetallePedidoDTO.cantidad" title="Cantidad" class="input-text qty">
+									<button (click)="calcularDetalle(detallePedido, 'sum')" class="increase items-count" type="button">
+										<i class="lnr lnr-chevron-up"></i>
+									</button>
+									<button (click)="calcularDetalle(detallePedido, 'res')" class="reduced items-count" type="button">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</td>
+							<td>
+								<h5>{{detallePedido.DetallePedidoDTO.total}}</h5>
+							</td>
+							<td>
+								<div class="serial">
+									<button class="btn btn-danger" (click)="eliminarDetallePedido(detallePedido)"><i class="fa fa-trash"></i></button>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<h5>Subtotal</h5>
+							</td>
+							<td>
+								<h5>${{pedidoDTO.subtotal}}</h5>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<h5>Iva 12%</h5>
+							</td>
+							<td>
+								<h5>${{pedidoDTO.iva}}</h5>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<h5>Total</h5>
+							</td>
+							<td>
+								<h5>${{pedidoDTO.total}}</h5>
+							</td>
+						</tr>
+						<tr class="out_button_area">
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>
+								<div class="checkout_btn_inner">
+									<a class="gray_btn" routerLink="/home" >Continuar Comprando</a>
+									<a class="main_btn" (click)="procesarPedido()">Procesar Pedido</a>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

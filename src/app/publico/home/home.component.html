@@ -1,0 +1,89 @@
+
+<section class="cat_product_area section_gap">
+  <div class="container">
+    <div class="row flex-row-reverse">
+      <div class="col-lg-9">
+
+        <div class="left_dorp">
+          <div class="input-group-icon mt-10">
+            <input type="text" [(ngModel)]="filtro" (keyup)="buscarProducto()" placeholder="Buscar cualquier cosa"  class="single-input">
+            <div class="icon">
+              <i class="fa fa-search" aria-hidden="true"></i>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="latest_product_inner">
+          <div class="row">
+
+            <div class="col-lg-4 col-md-6" *ngFor="let producto of listaProductosFiltro;">
+              <div class="single-product">
+                <div class="product-img">
+                  <img class="card-img" style="width:261px; height:262px" src="data:image/jpeg;base64,{{producto.foto?producto.foto:fotoDefault}}" alt="">
+                  <div class="p_icon" *ngIf="producto.stock>0">
+                    <a (click)="agregarItem(producto)">
+                      <i class="ti-shopping-cart" ></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="product-btm">
+                    <h4>{{producto.nombre}}</h4>
+                  <div class="mt-3">
+                    <span class="mr-4">${{producto.precio}}</span>
+                    <span style="color: #007600!important; ">{{(producto.stock>0)?'En Stock':'No Disponible'}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3">
+        <div class="left_sidebar_area">
+          <aside class="left_widgets p_filter_widgets">
+            <div class="l_w_title">
+              <h3>Presentacion</h3>
+            </div>
+            <div class="widgets_inner">
+              <ul class="list">
+                <li *ngFor="let presentacionProducto of listaPresentacionesProducto;">
+                  <a (click)="filtarPresentacion(presentacionProducto)" >{{presentacionProducto.nombre}}</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+
+          <aside class="left_widgets p_filter_widgets">
+            <div class="l_w_title">
+              <h3>Categorias</h3>
+            </div>
+            <div class="widgets_inner">
+              <ul class="list">
+                <li *ngFor="let categoriaProducto of listaCategoriasProducto;">
+                  <a (click)="filtarCategoria(categoriaProducto)" >{{categoriaProducto.nombre}}</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+
+          <aside class="left_widgets p_filter_widgets">
+            <div class="l_w_title">
+              <h3>Linea</h3>
+            </div>
+            <div class="widgets_inner">
+              <ul class="list">
+                <li *ngFor="let lineaProducto of listaLineasProducto;">
+                  <a (click)="filtarLinea(lineaProducto)" >{{lineaProducto.nombre}}</a>
+                </li>
+              </ul>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

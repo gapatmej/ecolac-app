@@ -1,0 +1,150 @@
+<body class="hold-transition login-page">
+  <!--================Header Menu Area =================-->
+  <header class="header_area">
+    <div class="main_menu">
+      <div class="container" >
+          <a class="navbar-brand logo_h" routerLink="/home" style="width: 100%" >
+            <img src="/assets/images/LIFE_ECOLAC_a.png" style="display: block; margin-left: auto; margin-right: auto">
+          </a>
+        <nav class="navbar navbar-expand-lg navbar-light w-100">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse offset w-100" id="navbarSupportedContent">
+          <div class="row w-100 mr-0">
+            <div class="col-lg-7 pr-0">
+              <ul class="nav navbar-nav center_nav pull-right">
+                <li class="nav-item active">
+                  <a class="nav-link" routerLink="/home">Home</a>
+                </li>
+                <li class="nav-item active" *ngIf="usuarioDTO!=null && usuarioDTO.esCliente == true">
+                  <a class="nav-link" routerLink="/ventas/pedidoCliente" >Mis Pedidos</a>
+                </li>
+                <li class="nav-item submenu dropdown" *ngFor="let modulo of recursosPorModulo">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                  aria-expanded="false">{{modulo.nombreModulo}}</a>
+                  <ul class="dropdown-menu">
+                    <li class="nav-item" *ngFor="let recurso of modulo.recursos">
+                      <a class="nav-link" routerLink={{recurso.url}} >{{recurso.nombre}}</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+
+            <div class="col-lg-1 pr-0">
+              <ul class="nav navbar-nav navbar-right right_nav pull-right">
+                <li class="nav-item">
+                  <a routerLink="/carrito" class="icons">
+                    <i class="ti-shopping-cart" style="font-size:x-large"><span style="background-color:red; color:white; border-radius:50%; height:20px; width: 20px; display: inline-block; font-size: initial">{{appCom.numeroItemsCarrito}}</span></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-2" style="display: grid; margin: auto">
+              <button *ngIf="usuarioDTO == null" class="btn submit_btn" style="background:#8f9589" routerLink="/registro" >Registrarse</button>
+            </div>
+            <div class="col-lg-2" style="display: grid; margin: auto">
+              <button  (click)="btnLogin();" class="btn submit_btn">{{lblLogin}}</button> 
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+<!--================Header Menu Area =================-->
+
+<router-outlet>
+</router-outlet>
+
+<footer class="footer-area section_gap">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-md-6 single-footer-widget">
+        <h4>ACERCA DE NOSOTROS</h4>
+        <ul>
+          <li><a href="#">Nuestra empresa</a></li>
+          <li><a href="#">Responsabilidad Social</a></li>
+          <li><a href="#">Noticias</a></li>
+          <li><a href="#">Trabaja con nosotros</a></li>
+        </ul>
+      </div>
+      <div class="col-lg-3 col-md-6 single-footer-widget">
+        <h4>SERVICIO AL CLIENTE</h4>
+        <ul>
+          <li><a href="#">Preguntas frecuentes</a></li>
+          <li><a href="#">Garantía incondicional</a></li>
+          <li><a href="#">Terminos y Polñiticas</a></li>
+          <li><a href="#">Promociones</a></li>
+        </ul>
+      </div>
+
+      <div class="col-lg-6 col-md-6 single-footer-widget">
+        <h4>NOTICIAS</h4>
+        <p>Tu puedes suscribirte a nuestras promociones</p>
+        <div class="form-wrap" id="mc_embed_signup">
+          <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+          method="get" class="form-inline">
+          <input class="form-control" name="EMAIL" placeholder="Tu dirección de correo " onfocus="this.placeholder = ''"
+          onblur="this.placeholder = 'Your Email Address '" required="" type="email">
+          <button class="click-btn btn btn-default">Suscribirse</button>
+          <div style="position: absolute; left: -5000px;">
+            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+          </div>
+
+          <div class="info"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom row align-items-center">
+    <p class="footer-text m-0 col-lg-8 col-md-12">
+      Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados 2019</p>
+      <div class="col-lg-4 col-md-12 footer-social">
+        <a href="#"><i class="fa fa-facebook"></i></a>
+        <a href="#"><i class="fa fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <div id="id01" class= "w3-modal"  [ngStyle]="appCom.modal && {'display': 'block'}">
+    <div class="w3-modal-content w3-animate-top w3-card-4">
+      <header class="w3-container w3-teal"> 
+        <h2>Procesando ..... </h2>
+      </header>
+      <div class="w3-container" style="height: 200px" >
+        <div style="width: 45%; float: left">Por favor espera un momento..</div>
+        <div class='contain' style="width: 45%; float: left; height=150px">
+          <div class="cssload-body">
+            <span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+            <div class="cssload-base">
+              <span></span>
+              <div class="cssload-face"></div>
+            </div>
+          </div>
+          <div class="cssload-longfazers">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="w3-container w3-teal">
+        <p></p>
+      </footer>
+    </div>
+  </div>
+
+</body>

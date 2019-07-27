@@ -1,0 +1,155 @@
+<section class="checkout_area section_gap" *ngIf="pedidoDTO==null">
+	<div class="container" >
+		<div class="section-top-border" >
+			<h3 class="mb-30 title_color">Pedidos Registrados</h3>
+			<div class="progress-table-wrap">
+				<div class="progress-table">
+					<div class="table-head">
+						<div class="serial">#</div>
+						<div class="serial">Fecha</div>
+						<div class="serial">Direccion</div>
+						<div class="serial">Ciudad</div>
+						<div class="serial">Total</div>
+						<div class="serial">Estado</div>
+						<div class="serial"></div>
+						<div class="serial"></div>
+					</div>
+					<div class="table-row" *ngFor="let pedido of listaPedidosCliente; index as i">
+						<div class="serial">{{i+1}}</div>
+						<div class="serial">{{pedido.fecha}}</div>
+						<div class="serial">{{pedido.direccion}}</div>
+						<div class="serial">{{pedido.ciudad}}</div>
+						<div class="serial">{{pedido.total}}</div>
+						<div class="serial">{{pedido.estado}}</div>
+						<div class="serial">
+							<button class="btn btn-primary" (click)="visualizarPedido(pedido)"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+</section>
+
+<section class="checkout_area section_gap" style="padding-bottom:10px" *ngIf="pedidoDTO != null">
+	<div class="container">
+		<div class="button-group-area mt-40">
+			<a class="genric-btn success radius" (click)="pedidoDTO = null">Regresar</a>
+		</div>
+		<div class="billing_details" style="padding-top: 20px">
+			<div class="row">
+				<div class="col-lg-12">
+					
+					<div class="col-md-6 form-group p_star">
+						<h3>Pedido </h3> 
+					</div>
+					<div class="col-md-6 form-group p_star">
+						<h3 class="typo-list">{{pedidoDTO.estado}}</h3>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Nombres :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<label class="form-control" >{{usuarioDTO.nombres}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Apellidos :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<label class="form-control" >{{usuarioDTO.apellidos}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Telefono :</label>
+					</div>
+					<div class="col-md-4 form-group p_star">
+						<label class="form-control" >{{pedidoDTO.telefono}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Email :</label>
+					</div>
+					<div class="col-md-4 form-group p_star">
+						<label class="form-control" >{{usuarioDTO.email}}</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<label >Direccion :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<label class="form-control" >{{pedidoDTO.direccion}}</label>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<section class="cart_area" style="padding-top:10px" *ngIf="pedidoDTO!=null">
+	<div class="container">
+		<div class="cart_inner">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Producto</th>
+							<th scope="col">Precio Unitario</th>
+							<th scope="col">Cantidad</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let detallePedido of pedidoDTO.detallesPedido" >
+							<td>
+								<div class="media">
+									<div class="media-body">
+										<p>{{detallePedido.DetallePedidoDTO.descripcion}}</p>
+									</div>
+								</div>
+							</td>
+							<td>
+								<h5>${{detallePedido.DetallePedidoDTO.precioUnitario}}</h5>
+							</td>
+							<td>
+								<h5>{{detallePedido.DetallePedidoDTO.cantidad}}</h5>
+							</td>
+							<td>
+								<h5>${{detallePedido.DetallePedidoDTO.total}}</h5>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<h5>Subtotal</h5>
+							</td>
+							<td>
+								<h5>${{pedidoDTO.subtotal}}</h5>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<h5>Iva 12%</h5>
+							</td>
+							<td>
+								<h5>${{pedidoDTO.iva}}</h5>
+							</td>
+						</tr>
+						<tr>
+							<td></td>
+							<td></td>
+							<td>
+								<h5>Total</h5>
+							</td>
+							<td>
+								<h5>${{pedidoDTO.total}}</h5>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</section>

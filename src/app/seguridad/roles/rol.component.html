@@ -1,0 +1,111 @@
+ 
+<section class="checkout_area section_gap">
+	<div class="container" >
+		<div class="button-group-area mt-40">
+			<a class="genric-btn primary radius" (click)="nuevo()" >Nuevo</a>
+			<a class="genric-btn btn-success radius" (click)="guardar()" *ngIf="editado" >{{rolDTO.idRol?"Actualizar":"Guardar"}}</a>
+			<a class="genric-btn success radius" (click)="limpiar()" *ngIf="editado" >Cancelar</a>
+		</div>
+		<div class="section-top-border" *ngIf="!editado">
+			<h3 class="mb-30 title_color">Tabla Contenido Roles</h3>
+			<div class="progress-table-wrap">
+				<div class="progress-table">
+					<div class="table-head">
+						<div class="serial">#</div>
+						<div class="serial">Nombre</div>
+						<div class="serial">Nombre Corto</div>
+						<div class="serial">Mnemonico</div>
+						<div class="serial">Descripcion</div>
+						<div class="serial">Estado</div>
+						<div class="serial"></div>
+						<div class="serial"></div>
+					</div>
+					<div class="table-row" *ngFor="let rol of listaRoles; index as i">
+						<div class="serial">{{i+1}}</div>
+						<div class="serial">{{rol.nombre}}</div>
+						<div class="serial">{{rol.nombreCorto}}</div>
+						<div class="serial">{{rol.mnemonico}}</div>
+						<div class="serial">{{rol.descripcion}}</div>
+						<div class="serial">{{rol.activo==1?"Activo":"Deshabilitado"}}</div>
+						<div class="serial">
+							<button class="btn btn-primary" (click)="editar(rol)"><i class="fa fa-pencil"></i></button>
+						</div>
+						<div class="serial">
+							<button class="btn btn-danger" (click)="eliminar(rol)"><i class="fa fa-trash"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-top-border" *ngIf="editado">
+			<h3 class="mb-30 title_color">Registro Rol</h3>
+			<form action="#">
+				<div class="mt-10">
+					<input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="rolDTO.nombre" placeholder="Nombre" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="nombreCorto" #nombreCorto="ngModel" [(ngModel)]="rolDTO.nombreCorto" placeholder="Nombre Corto" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre Corto'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="mnemonico" #mnemonico="ngModel" [(ngModel)]="rolDTO.mnemonico" placeholder="Mnemonico" onfocus="this.placeholder=''" onblur="this.placeholder = 'Mnemonico'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="rolDTO.descripcion" placeholder="Descripcion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Descripcion'" class="single-input">
+				</div>
+				<div class="mt-30">
+					<label class="checkbox-inline"><input type="checkbox" name="activo" #activo="ngModel" [(ngModel)]="rolDTO.activo" />Activo</label>
+				</div>
+				<div class="mt-10" style="display: inline-flex;">
+					<div>
+						Recursos :
+					</div>
+					<div class="form-select" id="default-select">
+						<div class="nice-select" tabindex="0">
+							<span class="current" id="spanSeleccione">Seleccione un recurso</span>
+							<ul class="list">
+								<li class="option" *ngFor="let recurso of listaRecursos" (click)="capturarRecurso(recurso)" >{{recurso.nombre}}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="icon">
+						<button class="btn btn-primary" (click)="agregarRecurso()"><i class="fa fa-plus fa-sm">Agregar</i></button>
+					</div>					
+				</div>
+
+				<div class="section-top-border">
+					<h3 class="mb-30 title_color">Tabla Contenido Recursos</h3>
+					<div class="progress-table-wrap">
+						<div class="progress-table">
+							<div class="table-head">
+								<div class="serial">#</div>
+								<div class="serial">Nombre</div>
+								<div class="serial">Nombre Corto</div>
+								<div class="serial">Mnemonico</div>
+								<div class="serial">Componente</div>
+								<div class="serial">Descripcion</div>
+								<div class="serial">Url</div>
+								<div class="serial"></div>
+							</div>
+							<div class="table-row" *ngFor="let recurso of rolDTO.recursos; index as i">
+								<div class="serial">{{i+1}}</div>
+								<div class="serial">{{recurso.RecursoDTO.nombre}}</div>
+								<div class="serial">{{recurso.RecursoDTO.nombreCorto}}</div>
+								<div class="serial">{{recurso.RecursoDTO.mnemonico}}</div>
+								<div class="serial">{{recurso.RecursoDTO.componente}}</div>
+								<div class="serial">{{recurso.RecursoDTO.descripcion}}</div>
+								<div class="serial">{{recurso.RecursoDTO.url}}</div>
+								<div class="serial">
+									<button class="btn btn-danger" (click)="eliminarRecurso(recurso)"><i class="fa fa-trash"></i></button>
+								</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+
+	</div>
+
+</section>

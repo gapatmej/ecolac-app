@@ -1,0 +1,65 @@
+ 
+<section class="checkout_area section_gap">
+	<div class="container" >
+		<div class="button-group-area mt-40">
+			<a class="genric-btn primary radius" (click)="nuevo()" >Nuevo</a>
+			<button class="btn btn-dark" (click)="exportar()" *ngIf="!editado"><i class="fa fa-file-excel-o"></i></button>
+			<a class="genric-btn btn-success radius" (click)="guardar()" *ngIf="editado" >{{categoriaProductoDTO.idCategoriaProducto?"Actualizar":"Guardar"}}</a>
+			<a class="genric-btn success radius" (click)="limpiar()" *ngIf="editado" >Cancelar</a>
+		</div>
+		<div class="section-top-border" *ngIf="!editado">
+			<h3 class="mb-30 title_color">Tabla Contenido Categorias Producto</h3>
+			<div class="progress-table-wrap">
+				<div class="progress-table">
+					<div class="table-head">
+						<div class="serial">#</div>
+						<div class="serial">Nombre</div>
+						<div class="serial">Nombre Corto</div>
+						<div class="serial">Mnemonico</div>
+						<div class="serial">Descripcion</div>
+						<div class="serial">Estado</div>
+						<div class="serial"></div>
+						<div class="serial"></div>
+					</div>
+					<div class="table-row" *ngFor="let categoriaProducto of listaCategoriasProducto; index as i">
+						<div class="serial">{{i+1}}</div>
+						<div class="serial">{{categoriaProducto.nombre}}</div>
+						<div class="serial">{{categoriaProducto.nombreCorto}}</div>
+						<div class="serial">{{categoriaProducto.mnemonico}}</div>
+						<div class="serial">{{categoriaProducto.descripcion}}</div>
+						<div class="serial">{{categoriaProducto.activo==1?"Activo":"Deshabilitado"}}</div>
+						<div class="serial">
+							<button class="btn btn-primary" (click)="editar(categoriaProducto)"><i class="fa fa-pencil"></i></button>
+						</div>
+						<div class="serial">
+							<button class="btn btn-danger" (click)="eliminar(categoriaProducto)"><i class="fa fa-trash"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-top-border" *ngIf="editado">
+			<h3 class="mb-30 title_color">Registro Categoria Producto</h3>
+			<form action="#">
+				<div class="mt-10">
+					<input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="categoriaProductoDTO.nombre" placeholder="Nombre" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="nombreCorto" #nombreCorto="ngModel" [(ngModel)]="categoriaProductoDTO.nombreCorto" placeholder="Nombre Corto" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre Corto'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="mnemonico" style="text-transform:uppercase" #mnemonico="ngModel" [(ngModel)]="categoriaProductoDTO.mnemonico" placeholder="Mnemonico" onfocus="this.placeholder=''" onblur="this.placeholder = 'Mnemonico'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="descripcion" #descripcion="ngModel" [(ngModel)]="categoriaProductoDTO.descripcion" placeholder="Descripcion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Descripcion'" class="single-input">
+				</div>
+				<div class="mt-40">
+					<label class="checkbox-inline" style="font-size:20px; margin-right:15px"><input type="checkbox"  name="activo" #activo="ngModel" [(ngModel)]="categoriaProductoDTO.activo" style="margin-right:15px" />Activo</label>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+</section>

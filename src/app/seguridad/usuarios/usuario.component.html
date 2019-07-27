@@ -1,0 +1,136 @@
+
+<section class="checkout_area section_gap">
+	<div class="container" >
+		<div class="button-group-area mt-40">
+			<a class="genric-btn primary radius" (click)="nuevoRegistro()" >Nuevo</a>
+			<a class="genric-btn btn-success radius" (click)="guardar()" *ngIf="editado || nuevo" >{{nuevo?"Guardar":"Actualizar"}}</a>
+			<a class="genric-btn success radius" (click)="limpiar()" *ngIf="editado || nuevo" >Cancelar</a>
+		</div>
+		<div class="section-top-border" *ngIf="!editado && !nuevo">
+			<h3 class="mb-30 title_color">Tabla Contenido Usuarios</h3>
+			<div class="progress-table-wrap">
+				<div class="progress-table">
+					<div class="table-head">
+						<div class="serial">#</div>
+						<div class="serial">Username</div>
+						<div class="serial">Nombres y Apellidos</div>
+						<div class="serial">Telefono</div>
+						<div class="serial">Cedula</div>
+						<div class="serial">Estado</div>
+						<div class="serial"></div>
+						<div class="serial"></div>
+					</div>
+					<div class="table-row" *ngFor="let usuario of listaUsuarios; index as i">
+						<div class="serial">{{i+1}}</div>
+						<div class="serial">{{usuario.username}}</div>
+						<div class="serial">{{usuario.nombres + " " + usuario.apellidos }}</div>
+						<div class="serial">{{usuario.telefono}}</div>
+						<div class="serial">{{usuario.cedula}}</div>
+						<div class="serial">{{usuario.activo==1?"Activo":"Deshabilitado"}}</div>
+						<div class="serial">
+							<button class="btn btn-primary" (click)="editar(usuario)"><i class="fa fa-pencil"></i></button>
+						</div>
+						<div class="serial">
+							<button class="btn btn-danger" (click)="eliminar(usuario)"><i class="fa fa-trash"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-top-border" *ngIf="editado || nuevo">
+			<h3 class="mb-30 title_color">Registro Usuario</h3>
+			<form action="#">
+				<div class="mt-10">
+					<input type="text" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder = 'Username'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="nombres" #nombres="ngModel" [(ngModel)]="usuarioDTO.nombres" placeholder="Nombres" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombres'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuarioDTO.apellidos" placeholder="Apellidos" onfocus="this.placeholder=''" onblur="this.placeholder = 'Apellidos'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="usuarioDTO.telefono" placeholder="Telefono" onfocus="this.placeholder=''" onblur="this.placeholder = 'Telefono'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="email" name="email" #email="ngModel" [(ngModel)]="usuarioDTO.email" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder = 'Email'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="cedula" #cedula="ngModel" [(ngModel)]="usuarioDTO.cedula" placeholder="Cedula" onfocus="this.placeholder=''" onblur="this.placeholder = 'Cedula'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="ciudad" #ciudad="ngModel" [(ngModel)]="usuarioDTO.ciudad" placeholder="Ciudad" onfocus="this.placeholder=''" onblur="this.placeholder = 'Ciudad'" class="single-input">
+				</div>
+				<div class="mt-10">
+					<input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="usuarioDTO.direccion" placeholder="Direccion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Direccion'" class="single-input">
+				</div>				
+				<div class="mt-40">
+					<label class="checkbox-inline" style="font-size:20px; margin-right:15px"><input type="checkbox"  name="activo" #activo="ngModel" [(ngModel)]="usuarioDTO.activo" style="margin-right:15px" />Activo</label>
+					<label class="checkbox-inline" style="font-size:20px; margin-right:15px"><input type="checkbox"  name="esAdministrador" #esAdministrador="ngModel" [(ngModel)]="usuarioDTO.esAdministrador" style="margin-right:15px" />Es Administrador</label>
+					<label class="checkbox-inline" style="font-size:20px; margin-right:15px"><input type="checkbox"  name="esRepartidor" #esRepartidor="ngModel" [(ngModel)]="usuarioDTO.esRepartidor" style="margin-right:15px" />Es Repartidor</label>
+					<label class="checkbox-inline" style="font-size:20px; margin-right:15px"><input type="checkbox"  name="esCliente" #esCliente="ngModel" [(ngModel)]="usuarioDTO.esCliente" style="margin-right:15px" />Es Cliente</label>
+				</div>
+				<div class="mt-10">
+					
+				</div>
+				<div class="mt-10">
+					<label >Agregar Roles </label>
+				</div>	
+				<div class="mt-10" style="display: inline-flex;">
+					<div class="form-select" id="default-select">
+						<div class="nice-select" tabindex="0">
+							<span class="current" id="spanSeleccione">Seleccione un rol</span>
+							<ul class="list">
+								<li class="option" *ngFor="let rol of listaRoles" (click)="capturarRol(rol)" >{{rol.nombre}}</li>
+							</ul>
+						</div>
+					</div>
+					<div class="icon">
+						<button class="btn btn-primary" (click)="agregarRol()"><i class="fa fa-plus fa-sm">Agregar Rol</i></button>
+					</div>	
+				</div>	
+
+				
+				<div class="mt-10">
+					<div class="form-group">
+						<input type="text" placeholder="Buscar una localizacion" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search>
+					</div>
+				</div>
+				<div class="mt-10" >
+					<agm-map [zoom]="zoom" [latitude]="usuarioDTO.latitud" [longitude]="usuarioDTO.longitud" (mapClick)="marcarSitio($event)">
+						<agm-marker [latitude]="usuarioDTO.latitud" [longitude]="usuarioDTO.longitud"></agm-marker>
+					</agm-map> 		
+				</div>
+
+				<div class="section-top-border">
+					<h3 class="mb-30 title_color">Tabla Contenido Roles</h3>
+					<div class="progress-table-wrap">
+						<div class="progress-table">
+							<div class="table-head">
+								<div class="serial">#</div>
+								<div class="serial">Nombre</div>
+								<div class="serial">Nombre Corto</div>
+								<div class="serial">Mnemonico</div>
+								<div class="serial">Descripcion</div>
+								<div class="serial"></div>
+							</div>
+							<div class="table-row" *ngFor="let rol of usuarioDTO.roles; index as i">
+								<div class="serial">{{i+1}}</div>
+								<div class="serial">{{rol.RolDTO.nombre}}</div>
+								<div class="serial">{{rol.RolDTO.nombreCorto}}</div>
+								<div class="serial">{{rol.RolDTO.mnemonico}}</div>
+								<div class="serial">{{rol.RolDTO.descripcion}}</div>
+								<div class="serial">
+									<button class="btn btn-danger" (click)="eliminarRol(rol)"><i class="fa fa-trash"></i></button>
+								</div>
+							</div> 
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+
+	</div>
+
+</section>

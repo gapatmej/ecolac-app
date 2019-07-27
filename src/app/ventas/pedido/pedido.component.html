@@ -1,0 +1,197 @@
+<section class="checkout_area section_gap" >
+	<div class="container" >
+		<div class="button-group-area mt-40">
+			<a class="genric-btn primary radius" (click)="nuevo()" >Nuevo</a>
+			<button class="btn btn-dark" (click)="exportar()" *ngIf="!editado"><i class="fa fa-file-excel-o"></i></button>
+			<a class="genric-btn btn-success radius" (click)="guardar()" *ngIf="editado" >{{pedidoDTO.idPedido?"Actualizar":"Guardar"}}</a>
+			<a class="genric-btn success radius" (click)="limpiar()" *ngIf="editado" >Cancelar</a>
+		</div>
+		<div class="section-top-border" *ngIf="!editado">
+			<h3 class="mb-30 title_color">Pedidos Registrados</h3>
+			<div class="progress-table-wrap">
+				<div class="progress-table">
+					<div class="table-head">
+						<div class="serial">#</div>
+						<div class="serial">Fecha</div>
+						<div class="serial">Direccion</div>
+						<div class="serial">Ciudad</div>
+						<div class="serial">Subtotal</div>
+						<div class="serial">Iva</div>
+						<div class="serial">Total</div>
+						<div class="serial">Estado</div>
+					</div>
+					<div class="table-row" *ngFor="let pedido of listaPedidos; index as i">
+						<div class="serial">{{i+1}}</div>
+						<div class="serial">{{pedido.fecha}}</div>
+						<div class="serial">{{pedido.direccion}}</div>
+						<div class="serial">{{pedido.ciudad}}</div>
+						<div class="serial">{{pedido.subtotal}}</div>
+						<div class="serial">{{pedido.iva}}</div>
+						<div class="serial">{{pedido.total}}</div>
+						<div class="serial">{{pedido.estado}}</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-top-border" *ngIf="editado" >
+			<div class="row">
+				<div class="col-lg-12">
+					
+					<div class="col-md-12 form-group p_star">
+						<h3>Pedido </h3> 
+					</div>
+
+					<div class="col-md-2 form-group p_star">
+						<label >Fecha :</label>
+					</div>
+					<div class="col-md-10 form-group p_star" >
+						<input type="text" name="fecha" #fecha="ngModel" [(ngModel)]="pedidoDTO.fecha" placeholder="Fecha" onfocus="this.placeholder=''" onblur="this.placeholder = 'Fecha'" class="single-input" style="background: #f6f6f6 !important">	
+					</div>
+
+					<div class="col-md-2 form-group p_star">
+						<label >Cliente :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<div class="form-select" id="default-select" style="display: inline-flex;"> 
+							<div class="nice-select" tabindex="0">
+								<span class="current" id="spanSeleccione">{{pedidoDTO.cliente?pedidoDTO.cliente.UsuarioDTO.nombres:""}}</span>
+								<ul class="list">
+									<li class="option" *ngFor="let cliente of listaClientes" (click)="pedidoDTO.cliente = {UsuarioDTO :cliente};">{{cliente.nombres + " " + cliente.apellidos }}</li>
+								</ul>
+							</div>
+						</div>		
+					</div>
+
+					<div class="col-md-2 form-group p_star">
+						<label >Direccion :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="pedidoDTO.direccion" placeholder="Direccion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Direccion'" class="single-input" style="background: #f6f6f6 !important">
+					</div>
+					
+					<div class="col-md-2 form-group p_star">
+						<label >Telefono :</label>
+					</div>
+					<div class="col-md-10 form-group p_star">
+						<input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="pedidoDTO.telefono" placeholder="Telefono" onfocus="this.placeholder=''" onblur="this.placeholder = 'Telefono'" class="single-input" style="background: #f6f6f6 !important">
+					</div>
+
+					<div class="col-md-2 form-group p_star">
+						<label >Producto :</label>
+					</div>
+					<div class="col-md-5 form-group p_star" >
+						<div class="form-select" id="default-select" style="display: inline-flex;">
+							<div class="nice-select" tabindex="0">
+								<span class="current" id="spanSeleccione">{{productoSeleccionadoDTO.nombre}}</span>
+								<ul class="list">
+									<li class="option" *ngFor="let producto of listaProducto" (click)="capturarProducto(producto)">{{producto.nombre}}</li>
+								</ul>
+							</div>
+						</div>	
+					</div>
+					<div class="col-md-1 form-group p_star">
+						<label >Cantidad</label>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<div class="product_count">
+							<input type="text" id="cantidad" maxlength="2" digitos name="cantidad" #cantidad="ngModel" [(ngModel)]="detallePedidoDTO.cantidad" title="Cantidad" class="input-text qty">
+							<button (click)="sumarCantidad()" class="increase items-count" type="button">
+								<i class="lnr lnr-chevron-up"></i>
+							</button>
+							<button (click)="restarCantidad()" class="reduced items-count" type="button">
+								<i class="lnr lnr-chevron-down"></i>
+							</button>
+						</div>
+					</div>
+					<div class="col-md-2 form-group p_star">
+						<a class="main_btn" (click)="agregarProducto()">Agregar</a>
+					</div>
+
+				</div>
+			</div>
+
+			<div class="cart_inner">
+				<div class="table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">Producto</th>
+								<th scope="col">Precio Unitario</th>
+								<th scope="col">Cantidad</th>
+								<th scope="col">Total</th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr *ngFor="let detallePedido of pedidoDTO.detallesPedido" >
+								<td>
+									<div class="media">
+										<div class="media-body">
+											<p>{{detallePedido.DetallePedidoDTO.descripcion}}</p>
+										</div>
+									</div>
+								</td>
+								<td>
+									<h5>${{detallePedido.DetallePedidoDTO.precioUnitario}}</h5>
+								</td>
+								<td>
+									<div class="product_count">
+										<input type="text" id="cantidad" maxlength="12" name="cantidad" #cantidad="ngModel" [(ngModel)]="detallePedido.DetallePedidoDTO.cantidad" title="Cantidad" class="input-text qty">
+										<button (click)="calcularDetalle(detallePedido, 'sum')" class="increase items-count" type="button">
+											<i class="lnr lnr-chevron-up"></i>
+										</button>
+										<button (click)="calcularDetalle(detallePedido, 'res')" class="reduced items-count" type="button">
+											<i class="lnr lnr-chevron-down"></i>
+										</button>
+									</div>
+								</td>
+								<td>
+									<h5>{{detallePedido.DetallePedidoDTO.total}}</h5>
+								</td>
+								<td>
+									<div class="serial">
+										<button class="btn btn-danger" (click)="eliminarDetallePedido(detallePedido.DetallePedidoDTO)"><i class="fa fa-trash"></i></button>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>
+									<h5>Subtotal</h5>
+								</td>
+								<td>
+									<h5>${{pedidoDTO.subtotal}}</h5>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>
+									<h5>Iva 12%</h5>
+								</td>
+								<td>
+									<h5>${{pedidoDTO.iva}}</h5>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td></td>
+								<td>
+									<h5>Total</h5>
+								</td>
+								<td>
+									<h5>${{pedidoDTO.total}}</h5>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</section>
+
+

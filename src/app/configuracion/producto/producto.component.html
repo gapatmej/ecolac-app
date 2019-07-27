@@ -1,0 +1,169 @@
+<section class="checkout_area section_gap">
+	<div class="container" >
+		<div class="button-group-area mt-40">
+			<a class="genric-btn primary radius" (click)="nuevo()" >Nuevo</a>
+			<button class="btn btn-dark" (click)="exportar()" *ngIf="!editado"><i class="fa fa-file-excel-o"></i></button>
+			<a class="genric-btn btn-success radius" (click)="guardar()" *ngIf="editado" >{{productoDTO.idProducto?"Actualizar":"Guardar"}}</a>
+			<a class="genric-btn success radius" (click)="limpiar()" *ngIf="editado" >Cancelar</a>
+		</div>
+		<div class="section-top-border" *ngIf="!editado">
+			<h3 class="mb-30 title_color">Tabla Contenido Productos</h3>
+			<div class="progress-table-wrap">
+				<div class="progress-table">
+					<div class="table-head">
+						<div class="serial">#</div>
+						<div class="serial">Nombre</div>
+						<div class="serial">Nombre Corto</div>
+						<div class="serial">Precio</div>
+						<div class="serial">Stock</div>
+						<div class="serial">Estado</div>
+						<div class="serial"></div>
+						<div class="serial"></div>
+					</div>
+					<div class="table-row" *ngFor="let producto of listaProductos; index as i">
+						<div class="serial">{{i+1}}</div>
+						<div class="serial">{{producto.nombre}}</div>
+						<div class="serial">{{producto.nombreCorto}}</div>
+						<div class="serial">{{producto.precio}}</div>
+						<div class="serial">{{producto.stock}}</div>
+						<div class="serial">{{producto.activo==1?"Activo":"Deshabilitado"}}</div>
+						<div class="serial">
+							<button class="btn btn-primary" (click)="editar(producto)"><i class="fa fa-pencil"></i></button>
+						</div>
+						<div class="serial">
+							<button class="btn btn-danger" (click)="eliminar(producto)"><i class="fa fa-trash"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="section-top-border" *ngIf="editado" >
+
+			<div class="product_image_area">
+				<div class="container">
+					<div class="row s_product_inner">
+						<div class="col-lg-6">
+							<div class="s_product_img">
+								<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+									<div class="carousel-inner">
+										<div style="width:450px; height:450px">
+											<img src="data:image/jpeg;base64,{{
+											productoDTO.foto?productoDTO.foto:fotoDefault}}" height="100%" width="100%" alt="Imagen del producto">
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-5 offset-lg-1">
+							<div class="mt-10">
+								<input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="productoDTO.nombre" placeholder="Nombre" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre'" class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="text" name="nombreCorto" #nombreCorto="ngModel" [(ngModel)]="productoDTO.nombreCorto" placeholder="Nombre Corto" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre Corto'" class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="text" name="precio" #precio="ngModel" digitos [(ngModel)]="productoDTO.precio" placeholder="Precio" onfocus="this.placeholder=''" onblur="this.placeholder = 'Precio'" class="single-input">
+							</div>
+							<div class="mt-10">
+								<div class="product_count">
+									<label for="qty">Stock:</label>
+									<input type="text" id="sst" maxlength="12" digitos name="stock" #stock="ngModel" [(ngModel)]="productoDTO.stock" title="Stock:" class="input-text qty">
+									<button (click)="sumarCantidad()" class="increase items-count" type="button">
+										<i class="lnr lnr-chevron-up"></i>
+									</button>
+									<button (click)="restarCantidad()" class="reduced items-count" type="button">
+										<i class="lnr lnr-chevron-down"></i>
+									</button>
+								</div>
+							</div>
+
+							<div class="mt-30">
+								<label class="checkbox-inline" style="font-size:20px; margin-right:15px"><input type="checkbox"  name="activo" #activo="ngModel" [(ngModel)]="productoDTO.activo" style="margin-right:15px" />Activo</label>
+							</div>
+
+							<div class="card_area">
+								<div class="custom-file">
+									<input type="file" class="custom-file-input" accept="image/*" (change)="changeListener($event)">
+									<label class="custom-file-label" >Subir imagen...</label>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<section class="product_description_area">
+				<div class="container">
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active show" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Descripcion</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Especificaciones</a>
+						</li>
+					</ul>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade active show" id="home" role="tabpanel" aria-labelledby="home-tab">
+							<textarea class="form-control" rows="5" name="descripcion" #descripcion="ngModel" [(ngModel)]="productoDTO.descripcion"></textarea>
+						</div>
+						<div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+							<div class="mt-10">
+								<input type="text" name="atributo1" #atributo1="ngModel" [(ngModel)]="productoDTO.atributo1" placeholder="Atributo " onfocus="this.placeholder=''" onblur="this.placeholder = 'Atributo'" class="single-input">
+							</div>
+							<div class="mt-10">
+								<input type="text" name="atributo2" #atributo2="ngModel" [(ngModel)]="productoDTO.atributo2" placeholder="Atributo" onfocus="this.placeholder=''" onblur="this.placeholder = 'Atributo'" class="single-input">
+							</div>
+							<div class="mt-10">
+								<h6> Presentacion </h6>			
+							</div>
+							<div class="mt-10">
+								<div class="form-select" id="default-select">
+									<div class="nice-select" tabindex="0">
+										<span class="current" id="spanSeleccione">{{presentacionProductoSeleccionado.nombre}}</span>
+										<ul class="list">
+											<li class="option" *ngFor="let presentacionProducto of listaPresentacionesProducto" (click)="capturarPresentacionProducto(presentacionProducto)" >{{presentacionProducto.nombre}}</li>
+										</ul>
+									</div>
+								</div>				
+							</div>
+
+							<div class="mt-10">
+								<h6> Categoria </h6>			
+							</div>
+							<div class="mt-10">
+								<div class="form-select" id="default-select">
+									<div class="nice-select" tabindex="0">
+										<span class="current" id="spanSeleccione">{{categoriaProductoSeleccionado.nombre}}</span>
+										<ul class="list">
+											<li class="option" *ngFor="let categoriaProducto of listaCategoriasProducto" (click)="capturarCategoriaProducto(categoriaProducto)" >{{categoriaProducto.nombre}}</li>
+										</ul>
+									</div>
+								</div>				
+							</div>
+
+							<div class="mt-10">
+								<h6> Linea </h6>			
+							</div>
+							<div class="mt-10">
+								<div class="form-select" id="default-select">
+									<div class="nice-select" tabindex="0">
+										<span class="current" id="spanSeleccione">{{lineaProductoSeleccionado.nombre}}</span>
+										<ul class="list">
+											<li class="option" *ngFor="let lineaProducto of listaLineasProducto" (click)="capturarLineaProducto(lineaProducto)" >{{lineaProducto.nombre}}</li>
+										</ul>
+									</div>
+								</div>				
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</section>
+
+		</div>
+
+	</div>
+
+</section>

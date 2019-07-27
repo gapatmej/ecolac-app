@@ -1,0 +1,33 @@
+<section class="checkout_area section_gap">
+  <div class="container" >
+    <div class="returning_customer">
+      <div class="check_title">
+        <h2>
+          ¡Inicia sesión en tu cuenta de Ecolac! 
+        </h2>
+      </div>
+      <p>
+        Si ha comprado con nosotros anteriormente, ingrese sus datos en los cuadros a continuación. Si es un cliente nuevo, proceda a registrarse.
+      </p>
+      <form class="row contact_form" #formLogin="ngForm" (ngSubmit)="onSubmit()" method="post">
+        <div class="col-md-6 form-group p_star">
+          <input type="text" class="form-control" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username o Email" >
+        </div>
+        <div class="col-md-6 form-group p_star">
+          <input type="password" class="form-control" name="password" #password="ngModel" [(ngModel)]="usuarioDTO.password"
+          placeholder="Password">
+        </div>
+        <div class="col-md-12 form-group">
+          <button type="submit" class="btn submit_btn">
+            Iniciar Sesión
+          </button>
+          <div class="creat_account">
+            <input type="checkbox" id="f-option" name="selector">
+            <label for="f-option">Recordarme</label>
+          </div>
+          <a class="lost_pass" href="#">¿Olvidaste tu clave?</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
