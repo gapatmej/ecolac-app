@@ -78,7 +78,7 @@ import {NumberDirective} from './utils/directives/number.directive';
   CalendarModule,
   BrowserAnimationsModule,
   AgmCoreModule.forRoot({
-    apiKey: 'AIzaSyDyj6m3C9sLEofT3HRFdWCYDwLrQIhUzD0',
+    apiKey: 'xxx',
     libraries: ["places"]
   })
   ],
