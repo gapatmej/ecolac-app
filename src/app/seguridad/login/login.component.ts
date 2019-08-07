@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
 	public usuarioDTO: UsuarioDTO;
 	public jsonInput: jsonInput; 
 	public jsonOutput: jsonOutput;
+	public password:String;
 
 	constructor(private _loginService: LoginService, @Inject(SESSION_STORAGE) private storage:StorageService,
 		private router: Router){
@@ -37,7 +38,7 @@ export class LoginComponent implements OnInit {
 	onSubmit(){
 		AppComponent.modal = true;
 		this.jsonInput.headerInput.transaccion = ValoresGlobales.S_LOGIN001;
-		this.usuarioDTO.password = sha256(this.usuarioDTO .password);
+		this.usuarioDTO.password = sha256(this.password);
 		console.log(this.usuarioDTO);
 		this.jsonInput.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
 

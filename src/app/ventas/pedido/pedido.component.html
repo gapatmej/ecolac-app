@@ -46,7 +46,7 @@
 						<label >Fecha :</label>
 					</div>
 					<div class="col-md-10 form-group p_star" >
-						<input type="text" name="fecha" #fecha="ngModel" [(ngModel)]="pedidoDTO.fecha" placeholder="Fecha" onfocus="this.placeholder=''" onblur="this.placeholder = 'Fecha'" class="single-input" style="background: #f6f6f6 !important">	
+						<p-calendar placeholder="Fecha" [readonlyInput]="true" [(ngModel)]="pedidoDTO.fecha" showButtonBar="true"></p-calendar>
 					</div>
 
 					<div class="col-md-2 form-group p_star">

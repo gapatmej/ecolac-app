@@ -41,13 +41,14 @@ import { ProductoService } from './servicios/configuracion/ProductoService';
 
 import { PedidoService } from './servicios/ventas/PedidoService';
 
-import {CalendarModule} from 'primeng/calendar';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AgmCoreModule } from '@agm/core';
 
 //DIRECTIVAS
 import {NumberDirective} from './utils/directives/number.directive';
 
+//PRIME NG
+import {CalendarModule} from 'primeng/calendar';
 
 @NgModule({
   declarations: [
@@ -70,12 +71,12 @@ import {NumberDirective} from './utils/directives/number.directive';
   ProductosVendidosComponent
   ],
   imports: [
+  CalendarModule,
   BrowserModule,
   routing,
   FormsModule,
   HttpClientModule,
   StorageServiceModule,
-  CalendarModule,
   BrowserAnimationsModule,
   AgmCoreModule.forRoot({
     apiKey: 'xxx',

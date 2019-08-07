@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
 import {ValoresGlobales} from './../../modelos/valoresGlobales';
+import {AppComponent} from './../../app.component';
 import {UtilitariosComponent} from './../../utils/utilitarios.component';
 import {jsonInput} from './../../modelos/servicios/input/jsonInput';
 import {jsonOutput} from './../../modelos/servicios/output/jsonOutput';
@@ -56,6 +57,7 @@ export class PedidoComponent implements OnInit{
 		this.pedidoDTO.vendedor = {UsuarioDTO: this.usuarioDTO};
 		this.listaPedidos = new Array<PedidoDTO>();
 		this.consultarPedidos();
+		AppComponent.modal = false;
 	}
 
 	consultarPedidos(){
@@ -112,6 +114,7 @@ export class PedidoComponent implements OnInit{
 	}
 
 	guardar(){
+		AppComponent.modal = true;
 		this.jsonInputPedido.headerInput.transaccion = ValoresGlobales.S_CREAR_PEDIDO_001;
 
 		this.jsonInputPedido.bodyInput.data = {PedidoDTO: this.pedidoDTO};
