@@ -23,7 +23,7 @@ export class CarritoComponent implements OnInit{
 	public usuarioDTO:UsuarioDTO = this.storage.get("usuario")?this.storage.get("usuario").UsuarioDTO:null;
 	public pedidoDTO : PedidoDTO;
 
-	public jsonInputPedido = new jsonInput(this.storage.get("token"), ValoresGlobales.R_GES_PED);
+	public jsonInputPedido = new jsonInput(this.storage.get("token"), ValoresGlobales.R_CLIENTE);
 	public jsonOutput = new jsonOutput();
 
 	constructor(@Inject(SESSION_STORAGE) private storage:StorageService,
@@ -41,6 +41,7 @@ export class CarritoComponent implements OnInit{
 	}
 
 	procesarPedido(){
+		AppComponent.modal = true;
 
 		if(this.storage.get("token") == null){
 			this.router.navigate(['/login']);
@@ -54,15 +55,17 @@ export class CarritoComponent implements OnInit{
 		.subscribe(response =>{
 			this.jsonOutput = response;
 			if(response.errorOutput.codigoError == "0"){
+				AppComponent.modal = false;
 				let distanciaDTO:DistanciaDTO = response.bodyOutput.data.DistanciaDTO;
 				let mensajeRespuesta = "Transaccion completa . El repartidor mas cercano se encuentra a " 
 										+ distanciaDTO.distancia["text"] + " de distancia. Aproximandamente "
 										+ "llegara en "+ distanciaDTO.tiempo["text"];
 				alert( mensajeRespuesta );
 				this.storage.remove("pedido");
-				window.location.reload();
+				this.router.navigate(['/ventas/pedidoCliente']);
 			}
 			else{
+				AppComponent.modal = false;
 				alert("Hubo un problema con la transaccion : " + response.errorOutput.mensajeError);
 			}
 		});

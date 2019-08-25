@@ -21,7 +21,7 @@ export class PedidoClienteComponent implements OnInit{
 
 	public listaPedidosCliente: Array<PedidoDTO>;
 
-	public jsonInputPedido = new jsonInput(this.storage.get("token"), ValoresGlobales.R_GES_PED);
+	public jsonInputPedido = new jsonInput(this.storage.get("token"), ValoresGlobales.R_CLIENTE);
 	public jsonOutput = new jsonOutput();
 
 	constructor(@Inject(SESSION_STORAGE) private storage:StorageService,

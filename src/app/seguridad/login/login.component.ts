@@ -39,9 +39,7 @@ export class LoginComponent implements OnInit {
 		AppComponent.modal = true;
 		this.jsonInput.headerInput.transaccion = ValoresGlobales.S_LOGIN001;
 		this.usuarioDTO.password = sha256(this.password);
-		console.log(this.usuarioDTO);
 		this.jsonInput.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
-
 		this._loginService.getLogin( this.jsonInput )
 		.subscribe(response =>{
 			this.jsonOutput = response;
