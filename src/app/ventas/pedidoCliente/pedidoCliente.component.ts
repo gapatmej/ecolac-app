@@ -2,6 +2,7 @@ import {Component, OnInit, Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
+import {AppComponent} from './../../app.component';
 import {ValoresGlobales} from './../../modelos/valoresGlobales';
 import {jsonInput} from './../../modelos/servicios/input/jsonInput';
 import {jsonOutput} from './../../modelos/servicios/output/jsonOutput';
@@ -27,9 +28,11 @@ export class PedidoClienteComponent implements OnInit{
 	constructor(@Inject(SESSION_STORAGE) private storage:StorageService,
 		private _pedidoService: PedidoService, 
 		private router: Router){
+		AppComponent.modal = true;
 	}
 
 	ngOnInit(){
+		
 		this.listaPedidosCliente = new Array<PedidoDTO>();
 		this.consultarPedidosCliente();
 	}
@@ -45,7 +48,7 @@ export class PedidoClienteComponent implements OnInit{
 			this.jsonOutput.bodyOutput.data.forEach(value => {
 				this.listaPedidosCliente.push(value.PedidoDTO);
 			}); 
-
+			AppComponent.modal=false;
 		});
 	}
 

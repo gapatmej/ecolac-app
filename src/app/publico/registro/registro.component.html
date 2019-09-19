@@ -3,37 +3,37 @@
 	<div class="container" >
 		<div class="section-top-border" >
 			<h3 class="mb-30 title_color">Registro Usuario</h3>
-			<form action="#">
+			<form #formRegistro="ngForm" (ngSubmit)="registrarUsuario(formRegistro)">
 				<div class="mt-10">
-					<input type="text" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder = 'Username'" class="single-input">
+					<input required type="text" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder = 'Username'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="password" name="password" #password="ngModel" [(ngModel)]="usuarioDTO.password" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder = 'Password'" class="single-input">
+					<input required type="password" name="password" #password="ngModel" [(ngModel)]="usuarioDTO.password" placeholder="Password" onfocus="this.placeholder=''" onblur="this.placeholder = 'Password'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="text" name="nombres" #nombres="ngModel" [(ngModel)]="usuarioDTO.nombres" placeholder="Nombres" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombres'" class="single-input">
+					<input required type="text" name="nombres" #nombres="ngModel" [(ngModel)]="usuarioDTO.nombres" placeholder="Nombres" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombres'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuarioDTO.apellidos" placeholder="Apellidos" onfocus="this.placeholder=''" onblur="this.placeholder = 'Apellidos'" class="single-input">
+					<input required type="text" name="apellidos" #apellidos="ngModel" [(ngModel)]="usuarioDTO.apellidos" placeholder="Apellidos" onfocus="this.placeholder=''" onblur="this.placeholder = 'Apellidos'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="usuarioDTO.telefono" placeholder="Telefono" onfocus="this.placeholder=''" onblur="this.placeholder = 'Telefono'" class="single-input">
+					<input required type="text" name="telefono" #telefono="ngModel" [(ngModel)]="usuarioDTO.telefono" placeholder="Telefono" onfocus="this.placeholder=''" onblur="this.placeholder = 'Telefono'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="email" name="email" #email="ngModel" [(ngModel)]="usuarioDTO.email" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder = 'Email'" class="single-input">
+					<input required type="email" name="email" #email="ngModel" [(ngModel)]="usuarioDTO.email" placeholder="Email" onfocus="this.placeholder=''" onblur="this.placeholder = 'Email'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="text" name="cedula" #cedula="ngModel" [(ngModel)]="usuarioDTO.cedula" placeholder="Cedula" onfocus="this.placeholder=''" onblur="this.placeholder = 'Cedula'" class="single-input">
+					<input required type="text" name="cedula" #cedula="ngModel" [(ngModel)]="usuarioDTO.cedula" placeholder="Cedula" onfocus="this.placeholder=''" onblur="this.placeholder = 'Cedula'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="usuarioDTO.direccion" placeholder="Direccion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Direccion'" class="single-input">
+					<input required type="text" name="direccion" #direccion="ngModel" [(ngModel)]="usuarioDTO.direccion" placeholder="Direccion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Direccion'" class="single-input">
 				</div>
 				<div class="mt-10">
-					<input type="text" name="ciudad" #ciudad="ngModel" [(ngModel)]="usuarioDTO.ciudad" placeholder="Ciudad" onfocus="this.placeholder=''" onblur="this.placeholder = 'Ciudad'" class="single-input">
+					<input required type="text" name="ciudad" #ciudad="ngModel" [(ngModel)]="usuarioDTO.ciudad" placeholder="Ciudad" onfocus="this.placeholder=''" onblur="this.placeholder = 'Ciudad'" class="single-input">
 				</div>
 
 				<div class="mt-10">
-					<div class="form-group">
+					<div required class="form-group">
 						<input type="text" placeholder="Buscar una localizacion" autocorrect="off" autocapitalize="off" spellcheck="off" class="form-control" #search>
 					</div>
 				</div>
@@ -44,7 +44,7 @@
 				</div>
 
 				<div class="mt-10 col-md-12 form-group" style="text-align: center">
-					<button (click)="registrarUsuario()" class="btn submit_btn">
+					<button type="submit"  class="btn submit_btn">
 						Registrarse 
 					</button>
 				</div>

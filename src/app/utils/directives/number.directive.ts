@@ -6,13 +6,14 @@ import { Directive, ElementRef, HostListener } from '@angular/core';
 
 export class NumberDirective {
   // Allow decimal numbers and negative values
-  private regex: RegExp = new RegExp(/^\d+$/);
+  private regex: RegExp = new RegExp(/^[0-9-.]+?$/);
   // Allow key codes for special events. Reflect :
   // Backspace, tab, end, home
   private specialKeys: Array<string> = ['Backspace', 'Tab', 'End', 'Home', '-', 'ArrowLeft', 'ArrowRight', 'Del', 'Delete','.'];
 
   constructor(private el: ElementRef) {
   }
+
   @HostListener('keydown', ['$event'])
   onKeyDown(event: KeyboardEvent) {
     if (this.specialKeys.indexOf(event.key) !== -1) {

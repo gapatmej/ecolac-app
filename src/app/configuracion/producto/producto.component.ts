@@ -71,25 +71,59 @@ export class ProductoComponent implements OnInit {
 
 	guardar(){
 		
-		if(this.productoDTO.idProducto){
-			this.jsonInputProducto.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_PRODUCTO_001;
-		}else{
-			this.jsonInputProducto.headerInput.transaccion = ValoresGlobales.S_CREAR_PRODUCTO_001;
+		if(this.validarFormulario()){
+			if(this.productoDTO.idProducto){
+				this.jsonInputProducto.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_PRODUCTO_001;
+			}else{
+				this.jsonInputProducto.headerInput.transaccion = ValoresGlobales.S_CREAR_PRODUCTO_001;
+			}
+
+			this.jsonInputProducto.bodyInput.data = {ProductoDTO: this.productoDTO};
+			this._productoService.guardar( this.jsonInputProducto )
+			.subscribe(response =>{
+				this.jsonOutput = response;
+				if(response.errorOutput.codigoError == "0"){
+					console.log(response.bodyOutput.data);
+					//alert("Transaccion completa");
+					this.limpiar();
+				}
+				else{
+					alert("Hubo un problema con la transaccion");
+				}
+			});
+
 		}
-		
-		this.jsonInputProducto.bodyInput.data = {ProductoDTO: this.productoDTO};
-		this._productoService.guardar( this.jsonInputProducto )
-		.subscribe(response =>{
-			this.jsonOutput = response;
-			if(response.errorOutput.codigoError == "0"){
-				console.log(response.bodyOutput.data);
-				//alert("Transaccion completa");
-				this.limpiar();
-			}
-			else{
-				alert("Hubo un problema con la transaccion");
-			}
-		});
+
+	}
+
+	validarFormulario(){
+		console.log(this.productoDTO.nombre);
+		if(this.productoDTO.nombre == null ){
+			alert("Ingrese un nombre");
+			return false;
+		}
+		if(this.productoDTO.precio == null ){
+			alert("Ingrese un precio");
+			return false;
+		}
+		if(this.productoDTO.stock == null ){
+			alert("Ingrese un stock");
+			return false;
+		}
+		if(this.productoDTO.presentacionProducto == null ){
+			alert("Ingrese una presentacion");
+			return false;
+		}
+		if(this.productoDTO.categoriaProducto == null ){
+			alert("Ingrese un categoria");
+			return false;
+		}
+		if(this.productoDTO.lineaProducto == null ){
+			alert("Ingrese un linea");
+			return false;
+		}
+
+		return true;
 
 	}
 

@@ -1,6 +1,7 @@
 import {Component, OnInit, Inject, Injectable} from '@angular/core';          
 import {Router} from '@angular/router';
 
+import {AppComponent} from './../../app.component';
 import {ValoresGlobales} from './../../modelos/valoresGlobales';
 import {jsonInput} from './../../modelos/servicios/input/jsonInput';
 import {jsonOutput} from './../../modelos/servicios/output/jsonOutput';
@@ -12,6 +13,7 @@ import {UsuarioService} from './../../servicios/seguridad/UsuarioService';
 import { MapsAPILoader } from '@agm/core';
 import {} from '@types/googlemaps';
 import { ViewChild, ElementRef, NgZone } from '@angular/core';
+import { NgForm } from '@angular/forms/src/directives/ng_form';
 
 import * as sha256 from 'sha256';
 
@@ -44,24 +46,32 @@ export class RegistroComponent implements OnInit{
 		this.cargarCiudades();
 	}
 	
-	registrarUsuario(){
-		this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_CREAR_USUARIO_002;
+	registrarUsuario(formRegistro:NgForm){
+		console.log(formRegistro);
+		if(formRegistro.valid){
+			AppComponent.modal=true;
+			this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_CREAR_USUARIO_002;
+
+			this.usuarioDTO.password = sha256(this.usuarioDTO .password);
+			this.usuarioDTO.latitud = this.miLat;
+			this.usuarioDTO.longitud = this.miLong;
+			this.jsonInputUsuarios.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
+			this._usuarioService.guardar( this.jsonInputUsuarios )
+			.subscribe(response =>{
+				this.jsonOutput = response;
+				if(response.errorOutput.codigoError == "0"){
+					this.router.navigate(['/login']);
+					alert("Transaccion completa");
+				}
+				else{
+					alert("Hubo un problema con la transaccion");
+				}
+				AppComponent.modal=false;
+			});
+		}else{
+			alert("Formulario inválido");
+		}
 		
-		this.usuarioDTO.password = sha256(this.usuarioDTO .password);
-		this.usuarioDTO.latitud = this.miLat;
-		this.usuarioDTO.longitud = this.miLong;
-		this.jsonInputUsuarios.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
-		this._usuarioService.guardar( this.jsonInputUsuarios )
-		.subscribe(response =>{
-			this.jsonOutput = response;
-			if(response.errorOutput.codigoError == "0"){
-				this.router.navigate(['/login']);
-				alert("Transaccion completa");
-			}
-			else{
-				alert("Hubo un problema con la transaccion");
-			}
-		});
 	}
 
 	marcarSitio($event){

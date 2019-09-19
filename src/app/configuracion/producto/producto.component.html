@@ -57,18 +57,18 @@
 						</div>
 						<div class="col-lg-5 offset-lg-1">
 							<div class="mt-10">
-								<input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="productoDTO.nombre" placeholder="Nombre" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre'" class="single-input">
+								<input type="text" name="nombre" #nombre="ngModel" [(ngModel)]="productoDTO.nombre" placeholder="Nombre" onfocus="this.placeholder=''" required onblur="this.placeholder = 'Nombre'" class="single-input">
 							</div>
 							<div class="mt-10">
 								<input type="text" name="nombreCorto" #nombreCorto="ngModel" [(ngModel)]="productoDTO.nombreCorto" placeholder="Nombre Corto" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombre Corto'" class="single-input">
 							</div>
 							<div class="mt-10">
-								<input type="text" name="precio" #precio="ngModel" digitos [(ngModel)]="productoDTO.precio" placeholder="Precio" onfocus="this.placeholder=''" onblur="this.placeholder = 'Precio'" class="single-input">
+								<input type="text" name="precio" #precio="ngModel" required digitos [(ngModel)]="productoDTO.precio" placeholder="Precio" onfocus="this.placeholder=''" onblur="this.placeholder = 'Precio'" class="single-input">
 							</div>
 							<div class="mt-10">
 								<div class="product_count">
 									<label for="qty">Stock:</label>
-									<input type="text" id="sst" maxlength="12" digitos name="stock" #stock="ngModel" [(ngModel)]="productoDTO.stock" title="Stock:" class="input-text qty">
+									<input type="text" id="sst" maxlength="12" digitos name="stock" #stock="ngModel" [(ngModel)]="productoDTO.stock" title="Stock:" class="input-text qty" required>
 									<button (click)="sumarCantidad()" class="increase items-count" type="button">
 										<i class="lnr lnr-chevron-up"></i>
 									</button>
@@ -119,7 +119,7 @@
 								<h6> Presentacion </h6>			
 							</div>
 							<div class="mt-10">
-								<div class="form-select" id="default-select">
+								<div class="form-select" id="default-select" >
 									<div class="nice-select" tabindex="0">
 										<span class="current" id="spanSeleccione">{{presentacionProductoSeleccionado.nombre}}</span>
 										<ul class="list">

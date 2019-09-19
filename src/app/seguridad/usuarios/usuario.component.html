@@ -40,7 +40,7 @@
 
 		<div class="section-top-border" *ngIf="editado || nuevo">
 			<h3 class="mb-30 title_color">Registro Usuario</h3>
-			<form action="#">
+			<form #formUsuario="ngForm" (ngSubmit)="registrarUsuario(formRegistro)">
 				<div class="mt-10">
 					<input type="text" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder = 'Username'" class="single-input">
 				</div>

@@ -2,6 +2,7 @@ import {Component, OnInit, Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
+import {AppComponent} from './../../app.component';
 import {ValoresGlobales} from './../../modelos/valoresGlobales';
 import {UtilitariosComponent} from './../../utils/utilitarios.component';
 import {jsonInput} from './../../modelos/servicios/input/jsonInput';
@@ -32,6 +33,7 @@ export class DespachoComponent implements OnInit{
 	constructor(@Inject(SESSION_STORAGE) private storage:StorageService,
 		private _pedidoService: PedidoService,
 		private router: Router){
+		AppComponent.modal=true;
 	}
 
 	ngOnInit(){
@@ -49,11 +51,12 @@ export class DespachoComponent implements OnInit{
 			this.jsonOutput.bodyOutput.data.forEach(value => {
 				this.listaPedidos.push(value.PedidoDTO);
 			}); 
-
+			AppComponent.modal=false;
 		});
 	}
 
 	despacharPedido(pedidoDTO : PedidoDTO){
+		AppComponent.modal=true;
 		this.jsonInputPedido.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_PEDIDO_001;
 		this.jsonInputPedido.bodyInput.data = {PedidoDTO:pedidoDTO};
 		this._pedidoService.enviar( this.jsonInputPedido )
@@ -66,11 +69,13 @@ export class DespachoComponent implements OnInit{
 			else{
 				alert("Hubo un problema con la transaccion : " + response.errorOutput.mensajeError);
 			}
+			AppComponent.modal=false;
 		});
 
 	}
 
 	despacharDetalle(detallePedidoDTO : DetallesPedidoDTO){
+		AppComponent.modal=true;
 		detallePedidoDTO.DetallePedidoDTO.estado = 'DESPACHADO';
 		console.log(detallePedidoDTO);
 		this.jsonInputPedido.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_DETALLEPEDIDO_001;
@@ -85,6 +90,7 @@ export class DespachoComponent implements OnInit{
 			else{
 				alert("Hubo un problema con la transaccion : " + response.errorOutput.mensajeError);
 			}
+			AppComponent.modal=false;
 		});
 
 	}

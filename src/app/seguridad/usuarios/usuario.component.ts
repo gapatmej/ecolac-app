@@ -15,6 +15,7 @@ import {RolService} from './../../servicios/seguridad/RolService';
 import { MapsAPILoader } from '@agm/core';
 import {} from '@types/googlemaps';
 import { ViewChild, ElementRef, NgZone } from '@angular/core';
+import { NgForm } from '@angular/forms/src/directives/ng_form';
 
 import * as sha256 from 'sha256';
 
@@ -72,27 +73,32 @@ export class UsuarioComponent implements OnInit {
 		AppComponent.modal = false;
 	}
 
-	guardar(){
-		AppComponent.modal = true;
-		if(this.nuevo){
-			this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_CREAR_USUARIO_001;
-		}else{
-			this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_USUARIO_001;
-		}
+	guardar(formUsuario:NgForm){
+		if(formUsuario.valid){
+			AppComponent.modal = true;
+			if(this.nuevo){
+				this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_CREAR_USUARIO_001;
+			}else{
+				this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_USUARIO_001;
+			}
 
-		this.jsonInputUsuarios.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
-		this._usuarioService.guardar( this.jsonInputUsuarios )
-		.subscribe(response =>{
-			this.jsonOutput = response;
-			if(response.errorOutput.codigoError == "0"){
-				alert("Transaccion completa");
-				this.limpiar();
-			}
-			else{
-				alert("Hubo un problema con la transaccion");
-			}
-		});
-		console.log(this.usuarioDTO);
+			this.jsonInputUsuarios.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
+			this._usuarioService.guardar( this.jsonInputUsuarios )
+			.subscribe(response =>{
+				this.jsonOutput = response;
+				if(response.errorOutput.codigoError == "0"){
+					alert("Transaccion completa");
+					this.limpiar();
+				}
+				else{
+					alert("Hubo un problema con la transaccion");
+				}
+			});
+			console.log(this.usuarioDTO);
+		}else{
+			alert("Formulario invalido");
+		}
+		
 
 	}
 

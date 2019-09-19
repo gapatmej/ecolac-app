@@ -45,6 +45,7 @@ export class CarritoComponent implements OnInit{
 
 		if(this.storage.get("token") == null){
 			this.router.navigate(['/login']);
+			AppComponent.modal = false;
 			return;
 		}
 

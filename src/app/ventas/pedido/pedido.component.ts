@@ -44,6 +44,7 @@ export class PedidoComponent implements OnInit{
 		private _usuarioService: UsuarioService, 
 		private _productoService: ProductoService, 
 		private router: Router){
+		AppComponent.modal=true;
 	}
 
 	ngOnInit(){
@@ -71,6 +72,7 @@ export class PedidoComponent implements OnInit{
 			this.jsonOutput.bodyOutput.data.forEach(value => {
 				this.listaPedidos.push(value.PedidoDTO);
 			}); 
+			AppComponent.modal=false;
 
 		});
 	}
@@ -111,25 +113,58 @@ export class PedidoComponent implements OnInit{
 		this.detallePedidoDTO.cantidad = 1
 		this.consultarClientes();
 		this.consultarProductos();
+		this.pedidoDTO = new PedidoDTO();
+		this.pedidoDTO.detallesPedido = new Array<DetallesPedidoDTO>();
+		this.calcularPedido();
 	}
 
 	guardar(){
-		AppComponent.modal = true;
-		this.jsonInputPedido.headerInput.transaccion = ValoresGlobales.S_CREAR_PEDIDO_001;
 
-		this.jsonInputPedido.bodyInput.data = {PedidoDTO: this.pedidoDTO};
-		this._pedidoService.enviar( this.jsonInputPedido )
-		.subscribe(response =>{
-			this.jsonOutput = response;
-			if(response.errorOutput.codigoError == "0"){
-				alert("Transaccion completa");
-				this.limpiar();
-			}
-			else{
-				alert("Hubo un problema con la transaccion : " + response.errorOutput.mensajeError);
-			}
-		});
+		if(this.validarFormulario()){
+			AppComponent.modal = true;
+			this.jsonInputPedido.headerInput.transaccion = ValoresGlobales.S_CREAR_PEDIDO_001;
 
+			this.jsonInputPedido.bodyInput.data = {PedidoDTO: this.pedidoDTO};
+			this._pedidoService.enviar( this.jsonInputPedido )
+			.subscribe(response =>{
+				this.jsonOutput = response;
+				if(response.errorOutput.codigoError == "0"){
+					alert("Transaccion completa");
+					this.limpiar();
+				}
+				else{
+					alert("Hubo un problema con la transaccion : " + response.errorOutput.mensajeError);
+				}
+				AppComponent.modal=false;
+			});
+		}
+		
+
+	}
+
+	validarFormulario(){
+		if(this.pedidoDTO.fecha==null){
+			alert("Por favor ingresa una fecha");
+			return false;
+		}
+
+		if(this.pedidoDTO.cliente==null){
+			alert("Por favor ingresa un cliente");
+			return false;
+		}
+
+		if(this.pedidoDTO.direccion==null){
+			alert("Por favor ingresa una dirección");
+			return false;
+		}
+
+		if(this.pedidoDTO.telefono==null){
+			alert("Por favor ingresa un teléfono");
+			return false;
+		}
+
+
+		return true;
 	}
 
 	capturarProducto(producto : ProductoDTO ){

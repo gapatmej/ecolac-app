@@ -58,6 +58,7 @@ export class HomeComponent implements OnInit{
 	}
 
 	ngOnInit(){
+		AppComponent.modal=true;
 		this.usuarioDTO = this.storage.get("usuario")?this.storage.get("usuario").UsuarioDTO:null;
 		if(this.storage.get("pedido") == undefined){
 			this.pedidoDTO = this.crearPedido();
@@ -128,7 +129,7 @@ export class HomeComponent implements OnInit{
 			this.jsonOutput.bodyOutput.data.forEach(value => {
 				this.listaLineasProducto.push(value.LineaProductoDTO);
 			}); 
-			//AppComponent.modal = false;
+			AppComponent.modal = false;
 		});	
 	}
 

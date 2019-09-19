@@ -46,7 +46,7 @@
 						<label >Fecha :</label>
 					</div>
 					<div class="col-md-10 form-group p_star" >
-						<p-calendar placeholder="Fecha" [readonlyInput]="true" [(ngModel)]="pedidoDTO.fecha" showButtonBar="true"></p-calendar>
+						<p-calendar required placeholder="Fecha" [readonlyInput]="true" [(ngModel)]="pedidoDTO.fecha" showButtonBar="true"></p-calendar>
 					</div>
 
 					<div class="col-md-2 form-group p_star">
@@ -57,7 +57,7 @@
 							<div class="nice-select" tabindex="0">
 								<span class="current" id="spanSeleccione">{{pedidoDTO.cliente?pedidoDTO.cliente.UsuarioDTO.nombres:""}}</span>
 								<ul class="list">
-									<li class="option" *ngFor="let cliente of listaClientes" (click)="pedidoDTO.cliente = {UsuarioDTO :cliente};">{{cliente.nombres + " " + cliente.apellidos }}</li>
+									<li required class="option" *ngFor="let cliente of listaClientes" (click)="pedidoDTO.cliente = {UsuarioDTO :cliente};">{{cliente.nombres + " " + cliente.apellidos }}</li>
 								</ul>
 							</div>
 						</div>		
@@ -67,14 +67,14 @@
 						<label >Direccion :</label>
 					</div>
 					<div class="col-md-10 form-group p_star">
-						<input type="text" name="direccion" #direccion="ngModel" [(ngModel)]="pedidoDTO.direccion" placeholder="Direccion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Direccion'" class="single-input" style="background: #f6f6f6 !important">
+						<input required type="text" name="direccion" #direccion="ngModel" [(ngModel)]="pedidoDTO.direccion" placeholder="Direccion" onfocus="this.placeholder=''" onblur="this.placeholder = 'Direccion'" class="single-input" style="background: #f6f6f6 !important">
 					</div>
 					
 					<div class="col-md-2 form-group p_star">
 						<label >Telefono :</label>
 					</div>
 					<div class="col-md-10 form-group p_star">
-						<input type="text" name="telefono" #telefono="ngModel" [(ngModel)]="pedidoDTO.telefono" placeholder="Telefono" onfocus="this.placeholder=''" onblur="this.placeholder = 'Telefono'" class="single-input" style="background: #f6f6f6 !important">
+						<input required type="text" name="telefono" #telefono="ngModel" [(ngModel)]="pedidoDTO.telefono" placeholder="Telefono" onfocus="this.placeholder=''" onblur="this.placeholder = 'Telefono'" class="single-input" style="background: #f6f6f6 !important">
 					</div>
 
 					<div class="col-md-2 form-group p_star">
