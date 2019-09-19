@@ -2,6 +2,7 @@ import {Component, OnInit, Inject, Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import { SESSION_STORAGE, StorageService } from 'angular-webstorage-service';
 
+import {AppComponent} from './../../app.component';
 import {ValoresGlobales} from './../../modelos/valoresGlobales';
 import {UtilitariosComponent} from './../../utils/utilitarios.component';
 import {jsonInput} from './../../modelos/servicios/input/jsonInput';
@@ -48,6 +49,7 @@ export class ProductoComponent implements OnInit {
 		private _lineaProductoService: LineaProductoService ,
 		@Inject(SESSION_STORAGE) private storage:StorageService, 
 		private router: Router){
+		AppComponent.modal=true;
 	}
 
 	ngOnInit(){
@@ -65,7 +67,6 @@ export class ProductoComponent implements OnInit {
 	limpiar(){
 		this.editado = false;
 		this.cargarProductos();
-		
 		this.productoDTO = new ProductoDTO();
 	}
 
@@ -138,6 +139,7 @@ export class ProductoComponent implements OnInit {
 			this.jsonOutput.bodyOutput.data.forEach(value => {
 				this.listaProductos.push(value.ProductoDTO);
 			}); 
+			AppComponent.modal=false;
 
 		});	
 	}

@@ -47,6 +47,7 @@ export class UsuarioComponent implements OnInit {
 	constructor(private _usuarioService: UsuarioService, private _rolService: RolService, 
 		@Inject(SESSION_STORAGE) private storage:StorageService, 
 		private router: Router,private mapsAPILoader: MapsAPILoader, private ngZone: NgZone){
+		AppComponent.modal=true;
 	}
 
 	ngOnInit(){
@@ -59,10 +60,9 @@ export class UsuarioComponent implements OnInit {
 		this.consultarRoles();
 		this.cargarCiudades();
 		this.usuarioDTO = new UsuarioDTO();	
+		this.usuarioDTO.roles = new Array<RolDTO>();
 		this.usuarioDTO.latitud = -0.1833633258650444;
 		this.usuarioDTO.longitud = -78.46525753198398;
-
-
 	}
 
 	limpiar(){
@@ -70,11 +70,10 @@ export class UsuarioComponent implements OnInit {
 		this.nuevo = false;
 		this.cargarUsuarios();
 		this.usuarioDTO = new UsuarioDTO();
-		AppComponent.modal = false;
 	}
 
-	guardar(formUsuario:NgForm){
-		if(formUsuario.valid){
+	guardar(){
+		if(this.validarFormulario()){
 			AppComponent.modal = true;
 			if(this.nuevo){
 				this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_CREAR_USUARIO_001;
@@ -82,24 +81,66 @@ export class UsuarioComponent implements OnInit {
 				this.jsonInputUsuarios.headerInput.transaccion = ValoresGlobales.S_ACTUALIZAR_USUARIO_001;
 			}
 
+			this.usuarioDTO.password = sha256(this.usuarioDTO.username);
 			this.jsonInputUsuarios.bodyInput.data = {UsuarioDTO: this.usuarioDTO};
 			this._usuarioService.guardar( this.jsonInputUsuarios )
 			.subscribe(response =>{
 				this.jsonOutput = response;
 				if(response.errorOutput.codigoError == "0"){
 					alert("Transaccion completa");
-					this.limpiar();
 				}
 				else{
 					alert("Hubo un problema con la transaccion");
+					console.log(response.errorOutput);
 				}
+				this.limpiar();
 			});
 			console.log(this.usuarioDTO);
-		}else{
-			alert("Formulario invalido");
 		}
-		
+	}
 
+	validarFormulario(){
+		if(this.validarCampo(this.usuarioDTO.username)){
+			alert("Por favor ingrese un username");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.nombres)){
+			alert("Por favor ingrese sus nombres");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.apellidos)){
+			alert("Por favor ingrese sus apellidos");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.telefono)){
+			alert("Por favor ingrese un telefono");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.email)){
+			alert("Por favor ingrese un email");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.cedula)){
+			alert("Por favor ingrese una cédula");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.ciudad)){
+			alert("Por favor ingrese una ciudad");
+			return false;
+		}
+
+		if(this.validarCampo(this.usuarioDTO.direccion)){
+			alert("Por favor ingrese una direccion");
+			return false;
+		}
+
+		return true;
 	}
 
 	cargarUsuarios(){
@@ -113,6 +154,7 @@ export class UsuarioComponent implements OnInit {
 			this.jsonOutput.bodyOutput.data.forEach(value => {
 				this.listaUsuarios.push(value.UsuarioDTO);
 			}); 
+			AppComponent.modal = false;
 
 		});	
 	}
@@ -189,10 +231,11 @@ export class UsuarioComponent implements OnInit {
 		this.usuarioDTO.longitud =  $event.coords.lng;
 	}
 
-
-
-
-
-
+	private validarCampo(campo){
+		if(campo == null || campo==null){
+			return true;
+		}
+		return false;
+	}
 
 }

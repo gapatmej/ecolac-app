@@ -40,9 +40,9 @@
 
 		<div class="section-top-border" *ngIf="editado || nuevo">
 			<h3 class="mb-30 title_color">Registro Usuario</h3>
-			<form #formUsuario="ngForm" (ngSubmit)="registrarUsuario(formRegistro)">
+			<form #formUsuario="ngForm" >
 				<div class="mt-10">
-					<input type="text" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username" onfocus="this.placeholder=''" onblur="this.placeholder = 'Username'" class="single-input">
+					<input type="text" name="username" #username="ngModel" [(ngModel)]="usuarioDTO.username" placeholder="Username" onfocus="this.placeholder=''" required onblur="this.placeholder = 'Username'" class="single-input">
 				</div>
 				<div class="mt-10">
 					<input type="text" name="nombres" #nombres="ngModel" [(ngModel)]="usuarioDTO.nombres" placeholder="Nombres" onfocus="this.placeholder=''" onblur="this.placeholder = 'Nombres'" class="single-input">
