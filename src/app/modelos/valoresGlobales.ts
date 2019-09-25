@@ -1,6 +1,6 @@
 
 export const ValoresGlobales = Object.freeze({
-	BASE_API_URL: 'http://localhost:8081/ecolac-api/proccessjson.php',
+	BASE_API_URL: 'http://localhost:80/ecolac-api/proccessjson.php',
 	S_LOGIN001: "servicioLogin001",
 
 	S_CREAR_USUARIO_001: "servicioCrearUsuario001",
